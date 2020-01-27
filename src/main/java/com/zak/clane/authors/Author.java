@@ -1,31 +1,37 @@
 package com.zak.clane.authors;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class AuthorModel implements Serializable {
+@Table(name = "authors")
+public class Author implements Serializable {
 
+    @ApiModelProperty(notes = "The generated id for an author")
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ApiModelProperty(notes = "The author's email")
     @Column(unique = true)
     private String email;
 
+    @ApiModelProperty(notes = "The author's name")
     private String name;
 
+    @ApiModelProperty(notes = "The author's password")
     private String password;
 
+    @ApiModelProperty(notes = "The author's biography")
     private String bio;
 
-    public AuthorModel() {
+    public Author() {
     }
 
-    public AuthorModel(String email, String encodedPassword, String name, String bio) {
+    public Author(String email, String encodedPassword, String name, String bio) {
         this.email = email;
         this.password = encodedPassword;
         this.name = name;
@@ -70,7 +76,7 @@ public class AuthorModel implements Serializable {
 
     @Override
     public String toString() {
-        return "AuthorModel{" +
+        return "Author{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +

@@ -12,22 +12,17 @@ public class AuthorServiceImpl implements AuthorService{
     private AuthorRepository authorRepository;
 
     @Override
-    public AuthorModel save(AuthorModel authorModel) {
+    public Author save(Author authorModel) {
         return authorRepository.save(authorModel);
     }
 
     @Override
-    public List<AuthorModel> fetchAllAuthors() {
+    public List<Author> fetchAllAuthors() {
         return authorRepository.findAll();
     }
 
     @Override
-    public AuthorModel findOne(Long id) {
-        return authorRepository.getOne(id);
-    }
-
-    @Override
-    public AuthorModel existsByEmail(String email) {
+    public Author existsByEmail(String email) {
         return authorRepository.findByEmail(email);
     }
 

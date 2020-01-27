@@ -1,7 +1,7 @@
 package com.zak.clane.config;
 
 
-import com.zak.clane.authors.AuthorModel;
+import com.zak.clane.authors.Author;
 import com.zak.clane.authors.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +19,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
 
-        AuthorModel user = authorRepository.findByEmail(email);
+        Author user = authorRepository.findByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
@@ -29,7 +29,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        AuthorModel user = authorRepository.findByEmail(s);
+        Author user = authorRepository.findByEmail(s);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + s);
         }

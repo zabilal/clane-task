@@ -1,19 +1,26 @@
 package com.zak.clane.article;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "articles")
 public class ArticleModel implements Serializable {
 
+    @ApiModelProperty(notes = "The generated ID for an Article")
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ApiModelProperty(notes = "Title of an article")
     private String title;
 
+    @ApiModelProperty(notes = "The article content")
     private String content;
 
+    @ApiModelProperty(notes = "The article author's ID")
     private Long authorId;
 
     public Long getId() {

@@ -2,7 +2,7 @@ package com.zak.clane.authors;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AuthorRepository extends JpaRepository<AuthorModel, Long> {
+public interface AuthorRepository extends JpaRepository<Author, Long> {
 
-    AuthorModel findByEmail(String email);
+    Author findByEmail(String email);
 }

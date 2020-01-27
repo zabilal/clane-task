@@ -1,6 +1,10 @@
-package com.zak.clane.config;
+package com.zak.clane.controller;
 
-import java.util.Objects;
+import com.zak.clane.config.JwtRequest;
+import com.zak.clane.config.JwtResponse;
+import com.zak.clane.config.JwtTokenUtil;
+import com.zak.clane.config.JwtUserDetailsService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/api/v1")
 public class JwtAuthenticationController {
 
     @Autowired
@@ -28,7 +33,8 @@ public class JwtAuthenticationController {
     @Autowired
     private JwtUserDetailsService userDetailsService;
 
-    @RequestMapping(value = "/auth", method = RequestMethod.POST)
+    @ApiOperation(value = "Login in to get an auth token")
+    @RequestMapping(value = "/auth/token", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
         final UserDetails userDetails = userDetailsService

@@ -1,6 +1,8 @@
 package com.zak.clane.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,12 +22,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+//
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
-    private UserDetailsService jwtUserDetailsService;
+    private JwtUserDetailsService jwtUserDetailsService;
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
@@ -51,21 +53,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception {
 
-        httpSecurity.csrf().disable()
-                //we dont need to authenticate this endpoints
-                .authorizeRequests().antMatchers("/auth", "/author/author", "/article/articles","/author/authors").permitAll().
-                // all other requests need to be authenticated
-                anyRequest().authenticated().and().
-
-        // make sure we use stateless session; session won't be used to
-        // store user's state.
-        exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+        http
+                .antMatcher("/author")
+                .antMatcher("/authors")
+                .antMatcher("/articles")
+                .authorizeRequests()
+                .antMatchers("/**/actuator/**", "/**/api-docs/**", "/swagger-ui.html",
+                        "/**/webjars/**", "/**/api/v2/", "/**/swagger-resources/**", "/**/docs/**",
+                        "/**/health/**").permitAll()
+                .anyRequest().authenticated()
+                .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // Add a filter to validate the tokens with every request
-        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
     }
 
 }

@@ -1,5 +1,7 @@
 package com.zak.clane.article;
 
+import com.zak.clane.article.ArticleModel;
+
 import java.util.List;
 
 public interface ArticleService {
