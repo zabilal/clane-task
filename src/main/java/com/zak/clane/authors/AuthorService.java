@@ -5,6 +5,6 @@ import java.util.List;
 public interface AuthorService {
 
     Author save(Author authorModel);
-    List<Author> fetchAllAuthors();
+    List<Author> fetchAllAuthor();
     Author existsByEmail(String email);
 }

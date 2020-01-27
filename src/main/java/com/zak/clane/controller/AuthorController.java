@@ -69,6 +69,6 @@ public class AuthorController {
     @ApiOperation(value = "Fetch a list of all Authors")
     @GetMapping("/authors")
     public ResponseEntity<List<Author>> getAllAuthor(){
-        return ResponseEntity.ok(authorService.fetchAllAuthors());
+        return ResponseEntity.ok(authorService.fetchAllAuthor());
     }
 }
